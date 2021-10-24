@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import entity.Student;
 
-public class CreateStudentDemo {
+public class DeleteStudentDemo {
     
     public static void main(String[] args) {
         
@@ -15,19 +15,25 @@ public class CreateStudentDemo {
         Session session = factory.getCurrentSession();
 
         try{
-
-            System.out.println("Creating new Student.....please wait.......");
-
-            Student tempStudent = new Student ("Jason", "will", "testjason@test.com");
             
+            int studentId = 1;
+
+            session = factory.getCurrentSession();
             session.beginTransaction();
 
-            System.out.println("Saving.........");
-            session.save(tempStudent);
+            System.out.println("\nGet student wih id: " + studentId);
+
+            Student myStudent = session.get(Student.class, studentId);
+
+            System.out.println("Deleting................");
+            session.delete(myStudent);
+
+            session.createQuery("delete from Student where id=2").executeUpdate();
 
             session.getTransaction().commit();
 
             System.out.println("Sucess!!!!");
+        
         }finally{
             factory.close();
         }

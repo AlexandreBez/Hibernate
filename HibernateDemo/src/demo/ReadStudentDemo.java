@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import entity.Student;
 
-public class CreateStudentDemo {
+public class ReadStudentDemo {
     
     public static void main(String[] args) {
         
@@ -18,12 +18,26 @@ public class CreateStudentDemo {
 
             System.out.println("Creating new Student.....please wait.......");
 
-            Student tempStudent = new Student ("Jason", "will", "testjason@test.com");
-            
+            Student tempStudent = new Student ("Willian", "Blake", "testBlake@test.com");
+
             session.beginTransaction();
 
             System.out.println("Saving.........");
+            System.out.println(tempStudent);
             session.save(tempStudent);
+
+            session.getTransaction().commit();
+
+            System.out.println("Saved student: Generated id: " + tempStudent.getId());
+
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+
+            System.out.println("\nGetting student with id: " + tempStudent.getId());
+
+            Student myStudent = session.get(Student.class, tempStudent.getId());
+
+            System.out.println("Get complete: " + myStudent);
 
             session.getTransaction().commit();
 
